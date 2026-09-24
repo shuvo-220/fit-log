@@ -1,8 +1,11 @@
 import React from 'react'
+import Banner from './components/Banner'
 
 const page = () => {
   return (
-    <div>page</div>
+    <div className='mx-15'>
+      <Banner />
+    </div>
   )
 }
 
