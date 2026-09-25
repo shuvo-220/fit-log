@@ -1,7 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import { MdOutlineDateRange } from "react-icons/md";
-import { CiSaveUp2 } from "react-icons/ci";
+// import { MdOutlineDateRange } from "react-icons/md";
+// import { CiSaveUp2 } from "react-icons/ci";
+// import { useWorkout } from "@/app/WorkoutContext";
+import WorkoutActions from "../../components/WorkoutAction";
 
 const GymDetails = async ({ params }) => {
     const { id } = await params;
@@ -10,6 +12,7 @@ const GymDetails = async ({ params }) => {
         `https://api.abcz.workers.dev/api/fitlog/${id}`
     );
     const details = await res.json();
+
 
     return (
         <div className="min-h-screen bg-[#15171D] text-white px-5 py-10">
@@ -117,12 +120,7 @@ const GymDetails = async ({ params }) => {
 
                         {/* Button */}
                         <div className="mt-5 flex items-center gap-5">
-                            <button className="text-slate-700 cursor-pointer rounded-sm flex items-center gap-2 bg-[#CCFF00] py-2 px-4">
-                                <MdOutlineDateRange /> Add To Today's Plan
-                            </button>
-                            <button className="text-slate-700 cursor-pointer rounded-sm flex items-center gap-2 border border-slate-300 text-white py-2 px-4">
-                                <CiSaveUp2 /> Save For Later
-                            </button>
+                            <WorkoutActions exercise={details} />
                         </div>
 
                     </div>
