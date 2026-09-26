@@ -55,7 +55,7 @@ const Navbar = () => {
                             href="/myPlan"
                             className="flex items-center gap-2"
                         >
-                            <Link href='/myPlan'>Plan</Link>
+                           Plan
 
                             <span className="py-0.5 px-2 bg-[#CCFF00] text-slate-900 rounded-full text-sm">
                                 {todayPlan.length}
