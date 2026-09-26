@@ -4,10 +4,13 @@ import React from "react";
 import logo from "../assets/logo.png";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useWorkout } from "../WorkoutContext";
 
 const Navbar = () => {
     const { todayPlan, savedExercises } = useWorkout();
+
+    const pathname = usePathname();
 
     return (
         <div className="border-b border-slate-500">
@@ -16,7 +19,10 @@ const Navbar = () => {
 
                     {/* Logo */}
                     <div className="flex items-center gap-2">
-                        <Link href="/" className="flex items-center gap-2">
+                        <Link
+                            href="/"
+                            className="flex items-center gap-2"
+                        >
                             <Image
                                 src={logo}
                                 alt="logo"
@@ -32,19 +38,31 @@ const Navbar = () => {
 
                     {/* Navigation */}
                     <div className="flex items-center gap-5 text-sm sm:text-base">
+
+                        {/* Workout */}
                         <Link
                             href="/"
-                            className="hover:font-semibold transition"
+                            className={`transition ${
+                                pathname === "/"
+                                    ? "text-[#CCFF00] font-semibold"
+                                    : "text-white hover:text-[#CCFF00]"
+                            }`}
                         >
                             Workout
                         </Link>
 
+                        {/* My Plan */}
                         <Link
                             href="/myPlan"
-                            className="hover:font-semibold transition"
+                            className={`transition ${
+                                pathname === "/myPlan"
+                                    ? "text-[#CCFF00] font-semibold"
+                                    : "text-white hover:text-[#CCFF00]"
+                            }`}
                         >
                             My Plan
                         </Link>
+
                     </div>
 
                     {/* Plan & Saved */}
@@ -53,9 +71,15 @@ const Navbar = () => {
                         {/* Plan */}
                         <Link
                             href="/myPlan"
-                            className="flex items-center gap-2"
+                            className={`flex items-center gap-2 transition ${
+                                pathname === "/myPlan"
+                                    ? ""
+                                    : "text-white hover:text-[#CCFF00]"
+                            }`}
                         >
-                           Plan
+                            <span>
+                                Plan
+                            </span>
 
                             <span className="py-0.5 px-2 bg-[#CCFF00] text-slate-900 rounded-full text-sm">
                                 {todayPlan.length}
@@ -65,9 +89,15 @@ const Navbar = () => {
                         {/* Saved */}
                         <Link
                             href="/myPlan"
-                            className="flex items-center gap-2"
+                            className={`flex items-center gap-2 transition ${
+                                pathname === "/myPlan"
+                                    ? ""
+                                    : "text-white hover:text-[#CCFF00]"
+                            }`}
                         >
-                            <Link href='/myPlan'>Saved</Link>
+                            <span>
+                                Saved
+                            </span>
 
                             <span className="py-0.5 px-2 rounded-full border border-gray-300 text-sm">
                                 {savedExercises.length}

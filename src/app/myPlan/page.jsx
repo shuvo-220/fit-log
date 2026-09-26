@@ -5,6 +5,7 @@ import Image from "next/image";
 import { MdOutlineWatchLater } from "react-icons/md";
 import { FaBurn, FaRegStar } from "react-icons/fa";
 import { useWorkout } from "../WorkoutContext";
+import Link from "next/link";
 
 const Page = () => {
     const [activeTab, setActiveTab] = useState("today");
@@ -17,11 +18,8 @@ const Page = () => {
         removeFromSaved,
     } = useWorkout();
 
-    // Current tab data
     const currentData =
-        activeTab === "today"
-            ? todayPlan
-            : savedExercises;
+        activeTab === "today" ? todayPlan : savedExercises;
 
     // Sort data
     const sortedData = [...currentData].sort((a, b) => {
@@ -85,25 +83,27 @@ const Page = () => {
     return (
         <div className="min-h-screen bg-[#15171D]">
 
-            <div className="mx-15 py-15">
+            <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 xl:px-15 py-10 sm:py-12 lg:py-15">
 
                 {/* Page Title */}
-                <h1 className="uppercase text-white font-bold">
-                    My Plan
-                </h1>
+                <div className="mb-8 sm:mb-10">
+                    <h1 className="uppercase text-white font-bold text-2xl sm:text-3xl">
+                        My Plan
+                    </h1>
 
-                <p className="text-sm text-slate-300 mb-10">
-                    Cap of five lifts for today. Finish them, then load more.
-                </p>
+                    <p className="text-sm sm:text-base text-slate-300 mt-2">
+                        Cap of five lifts for today. Finish them, then load more.
+                    </p>
+                </div>
 
                 {/* Summary */}
-                <div className="border border-slate-600 py-5 px-4 rounded-md bg-slate-900">
+                <div className="border border-slate-600 py-5 px-4 sm:px-6 rounded-md bg-slate-900">
 
-                    <div className="flex items-center justify-between">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-4">
 
                         {/* Exercise */}
                         <div>
-                            <h2 className="text-slate-400">
+                            <h2 className="text-slate-400 text-sm sm:text-base">
                                 Exercise
                             </h2>
 
@@ -114,7 +114,7 @@ const Page = () => {
 
                         {/* Minutes */}
                         <div>
-                            <h2 className="text-slate-400">
+                            <h2 className="text-slate-400 text-sm sm:text-base">
                                 Minutes
                             </h2>
 
@@ -125,7 +125,7 @@ const Page = () => {
 
                         {/* Calories */}
                         <div>
-                            <h2 className="text-slate-400">
+                            <h2 className="text-slate-400 text-sm sm:text-base">
                                 Calories
                             </h2>
 
@@ -138,14 +138,14 @@ const Page = () => {
                 </div>
 
                 {/* Tabs + Sort */}
-                <div className="flex items-center justify-between py-5">
+                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 py-5">
 
                     {/* Tabs */}
-                    <div className="flex items-center gap-2 bg-gray-700 p-2 rounded-md">
+                    <div className="flex items-center gap-2 bg-gray-700 p-2 rounded-md w-full md:w-fit">
 
                         <button
                             onClick={() => setActiveTab("today")}
-                            className={`px-4 py-2 rounded-md ${
+                            className={`flex-1 md:flex-none px-3 sm:px-4 py-2 rounded-md text-sm sm:text-base whitespace-nowrap ${
                                 activeTab === "today"
                                     ? "bg-[#CCFF00] text-black"
                                     : "text-white"
@@ -156,7 +156,7 @@ const Page = () => {
 
                         <button
                             onClick={() => setActiveTab("saved")}
-                            className={`px-4 py-2 rounded-md ${
+                            className={`flex-1 md:flex-none px-3 sm:px-4 py-2 rounded-md text-sm sm:text-base ${
                                 activeTab === "saved"
                                     ? "bg-[#CCFF00] text-black"
                                     : "text-white"
@@ -168,9 +168,9 @@ const Page = () => {
                     </div>
 
                     {/* Sort */}
-                    <div className="text-slate-400 flex items-center gap-2">
+                    <div className="text-slate-400 flex items-center justify-between sm:justify-start gap-2">
 
-                        <span>
+                        <span className="text-sm sm:text-base">
                             Sort By:
                         </span>
 
@@ -179,7 +179,7 @@ const Page = () => {
                             onChange={(e) =>
                                 setSortBy(e.target.value)
                             }
-                            className="select select-sm bg-[#15171D] text-slate-300 border-slate-700"
+                            className="select select-sm bg-[#15171D] text-slate-300 border-slate-700 w-32 sm:w-auto"
                         >
                             <option value="duration">
                                 Duration
@@ -203,13 +203,20 @@ const Page = () => {
 
                     {sortedData.length === 0 ? (
 
-                        <div className="text-center py-20 border border-slate-800 rounded-md">
+                        <div className="text-center py-16 sm:py-20 px-4 border border-slate-800 rounded-md">
 
-                            <p className="text-slate-500">
+                            <p className="text-slate-500 mb-5 text-sm sm:text-base">
                                 {activeTab === "today"
                                     ? "No exercises added to today's plan."
                                     : "No saved exercises."}
                             </p>
+
+                            <Link
+                                href="/"
+                                className="inline-block bg-[#CCFF00] text-black font-semibold px-5 py-2.5 rounded-md hover:bg-[#b8e600] transition"
+                            >
+                                Browse Workout
+                            </Link>
 
                         </div>
 
@@ -219,68 +226,75 @@ const Page = () => {
 
                             <div
                                 key={exercise.id}
-                                className="border border-slate-800 p-5 rounded-md"
+                                className="border border-slate-800 p-4 sm:p-5 rounded-md"
                             >
 
-                                <div className="flex items-center justify-between">
+                                <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-5">
 
                                     {/* Details */}
-                                    <div className="flex items-center gap-4">
+                                    <div className="flex items-start gap-3 sm:gap-4 min-w-0">
 
                                         {/* Image */}
-                                        <div>
+                                        <div className="shrink-0">
+
                                             <Image
                                                 src={exercise.image}
                                                 alt={exercise.name}
                                                 width={120}
                                                 height={120}
-                                                className="w-30 h-30 object-cover rounded-md"
+                                                className="w-20 h-20 sm:w-24 sm:h-24 lg:w-30 lg:h-30 object-cover rounded-md"
                                             />
+
                                         </div>
 
                                         {/* Exercise Info */}
-                                        <div>
+                                        <div className="min-w-0">
 
-                                            <h2 className="font-bold text-xl text-white">
+                                            <h2 className="font-bold text-base sm:text-xl text-white break-words">
                                                 {exercise.name}
                                             </h2>
 
-                                            <span className="text-slate-500">
+                                            <span className="text-slate-500 text-sm">
                                                 {exercise.equipment}
                                             </span>
 
-                                            <div className="flex items-center gap-4 text-lg pt-2 text-slate-400">
+                                            {/* Stats */}
+                                            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm sm:text-base lg:text-lg pt-2 text-slate-400">
 
                                                 {/* Duration */}
-                                                <div className="flex items-center gap-2">
-
+                                                <div className="flex items-center gap-1.5">
                                                     <MdOutlineWatchLater />
 
-                                                    {exercise.minutes ||
-                                                        exercise.duration ||
-                                                        0}{" "}
-                                                    min
-
+                                                    <span>
+                                                        {exercise.minutes ||
+                                                            exercise.duration ||
+                                                            0}{" "}
+                                                        min
+                                                    </span>
                                                 </div>
 
                                                 {/* Calories */}
-                                                <div className="flex items-center gap-2">
+                                                <div className="flex items-center gap-1.5">
 
                                                     <FaBurn />
 
-                                                    {exercise.calories ||
-                                                        exercise.caloriesBurned ||
-                                                        0}{" "}
-                                                    Kcal
+                                                    <span>
+                                                        {exercise.calories ||
+                                                            exercise.caloriesBurned ||
+                                                            0}{" "}
+                                                        Kcal
+                                                    </span>
 
                                                 </div>
 
                                                 {/* Rating */}
-                                                <div className="flex items-center gap-2">
+                                                <div className="flex items-center gap-1.5">
 
                                                     <FaRegStar />
 
-                                                    {exercise.rating}
+                                                    <span>
+                                                        {exercise.rating || 0}
+                                                    </span>
 
                                                 </div>
 
@@ -291,11 +305,11 @@ const Page = () => {
                                     </div>
 
                                     {/* Buttons */}
-                                    <div className="flex items-center gap-3">
+                                    <div className="flex flex-col sm:flex-row lg:shrink-0 items-stretch sm:items-center gap-2 sm:gap-3 w-full lg:w-auto">
 
                                         {/* View Details */}
                                         <button
-                                            className="border border-gray-300 py-2 px-4 rounded-full text-white"
+                                            className="cursor-pointer border border-gray-300 py-2 px-4 rounded-full text-white text-sm sm:text-base whitespace-nowrap"
                                         >
                                             View Details
                                         </button>
@@ -303,12 +317,12 @@ const Page = () => {
                                         {/* Mark As Done */}
                                         {activeTab === "today" && (
                                             <button
-                                             onClick={() =>
-                                                handleRemove(
-                                                    exercise.id
-                                                )
-                                            }
-                                                className="py-2 px-4 bg-[#CCFF00] text-black rounded-full"
+                                                onClick={() =>
+                                                    handleRemove(
+                                                        exercise.id
+                                                    )
+                                                }
+                                                className="cursor-pointer py-2 px-4 bg-[#CCFF00] text-black rounded-full text-sm sm:text-base whitespace-nowrap"
                                             >
                                                 Mark As Done
                                             </button>
@@ -321,7 +335,7 @@ const Page = () => {
                                                     exercise.id
                                                 )
                                             }
-                                            className="text-white hover:text-red-500 cursor-pointer px-2"
+                                            className="text-white hover:text-red-500 cursor-pointer px-2 py-2 sm:py-1"
                                         >
                                             X
                                         </button>
